@@ -1,5 +1,5 @@
-Spherical Harmonic basis
-========================
+Spherical Harmonics
+===================
 
 For Spherical Deconvolution (SD) as implemented in MRtrix, processing is
 done in the Spherical Harmonic (SH) basis; this mathematical formulation
@@ -25,11 +25,7 @@ SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
 
-    Y_{l,m}(\theta,\phi) = \left\{ \begin{array}{rl}
-    -m & \text{if } m < 0,\\
-    Y_{l,0}(\theta,\phi}) & \text{if } m = 0,\\
-    \sqrt(2) \text{Re}\left[ Y_{l,m)(\theta ,\phi) \right] & \text{if } x > 0.
-    \end{array} \right.
+    Y_{l,m}(\theta,\phi) = \left\{ \begin{array}{rl} -m & \text{if } m < 0,\\ Y_{l,0}(\theta,\phi}) & \text{if } m = 0,\\ \sqrt(2) \text{Re}\left[ Y_{l,m)(\theta ,\phi) \right] & \text{if } x > 0.  \end{array} \right.  
 
 Indexing
 ^^^^^^^^
