@@ -21,7 +21,8 @@ discarded due to its instability to motion), so we can use a real basis with no
 imaginary components. Second, the problems involved all exhibit antipodal
 symmetry (i.e. symmetry about the origin, :math:`f(\mathbf{x}) = f(-\mathbf{x})`, so we can ignore all odd order terms
 in the series (since these correspond to strictly antisymmetric terms). The
-SH basis functions used in *MRtrix3* are therefore:
+SH basis functions :math:` \Upsilon_{l,m}(\theta,\phi)` used in *MRtrix3* are
+therefore:
 
 .. math::
 
@@ -36,7 +37,7 @@ function of order :math:`l` and phase :math:`m`, defined as:
 
 .. math::
 
-   Y_{l,m}(\theta,\phi) = P_{l,m}(\cos \theta) e^{im\phi}
+   Y_{l,m}(\theta,\phi) = \sqrt{\frac{2l+1}{4\pi}\frac{(l-m)!}{(l+m)!}} P_{l,m}(\cos \theta) e^{im\phi}
 
 Indexing
 ^^^^^^^^
