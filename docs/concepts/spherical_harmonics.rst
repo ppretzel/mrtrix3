@@ -11,36 +11,47 @@ all know and love. If you've ever looked at the raw image volumes from
 an FOD image, you'll know that all but the first one are basically not
 interpretable.
 
-Storage convention for Spherical Harmonics
-------------------------------------------
 
-Due to the nature of the problems addressed in diffusion MRI, the basis
-functions used are a subset of the full complex Spherical Harmonic series.
-First, the data involved are real (the phase information is invariably
-discarded due to its instability to motion), so we can use a real basis with no
-imaginary components. Second, the problems involved all exhibit antipodal
-symmetry (i.e. symmetry about the origin, :math:`f(\mathbf{x}) = f(-\mathbf{x})`, so we can ignore all odd order terms
-in the series (since these correspond to strictly antisymmetric terms). The
-SH basis functions :math:` \Upsilon_{l,m}(\theta,\phi)` used in *MRtrix3* are
+Spherical harmonics are special functions defined on the surface of a sphere.
+They form a complete orthonormal set and can therefore be used to represent any
+well-behaved spherical function. In many ways, they are the equivalent to the
+Fourier series for functions defined over spherical (rather than
+Cartesian) coordinates. They are defined as:
+
+.. math::
+
+   Y_l^m(\theta,\phi) = \sqrt{\frac{(2l+1)}{4\pi}\frac{(l-m)!}{(l+m)!}} P_l^m(\cos \theta) e^{im\phi}
+
+with integer *order* :math:`l` and *phase* :math:`m`, where :math:`l \geq 0`
+and :math:`-l \leq m \leq l`. Functions with increasing degree :math:`l`
+contain higher angular frequencies, while the different phase terms :math:`m`
+correspond to the different modes at that frequency. 
+
+Formulation used in MRtrix3
+---------------------------
+
+Due to the nature of the problems addressed in diffusion MRI, in *MRtrix3* a
+simplified version of the SH series is used. First, the data involved are real
+(the phase information is invariably discarded due to its instability to
+motion), so we can use a real basis with no imaginary components. Second, the
+problems involved all exhibit antipodal symmetry (i.e. symmetry about the
+origin, :math:`f(\mathbf{x}) = f(-\mathbf{x})`), so we can ignore all odd order
+terms in the series (since these correspond to strictly antisymmetric terms).
+The SH basis functions :math:`\Upsilon_l^m(\theta,\phi)` used in *MRtrix3* are
 therefore:
 
 .. math::
 
-   \Upsilon_{l,m}(\theta,\phi) = \begin{cases}
-   \sqrt{2} \quad \text{Im} \left[ Y_{l,-m}(\theta,\phi) \right] & \text{if $m < 0$},\\
-   Y_{l,0}(\theta,\phi) & \text{if $m = 0$},\\
-   \sqrt{2} \quad \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m > 0$},\\
+   \Upsilon_l^m(\theta,\phi) = \begin{cases}
+   0 & \text{if $l$ is odd}, \\
+   \sqrt{2} \quad \text{Im} \left[ Y_l^{-m}(\theta,\phi) \right] & \text{if $m < 0$},\\
+   Y_l^0(\theta,\phi) & \text{if $m = 0$},\\
+   \sqrt{2} \quad \text{Re} \left[ Y_l^m(\theta,\phi) \right] & \text{if $m > 0$},\\
    \end{cases}
 
-where :math:`Y_{l,m}(\theta,\phi)` is the full spherical harmonic basis
-function of order :math:`l` and phase :math:`m`, defined as:
 
-.. math::
-
-   Y_{l,m}(\theta,\phi) = \sqrt{\frac{2l+1}{4\pi}\frac{(l-m)!}{(l+m)!}} P_{l,m}(\cos \theta) e^{im\phi}
-
-Indexing
-^^^^^^^^
+Storage conventions
+^^^^^^^^^^^^^^^^^^^
 
 
 
