@@ -25,8 +25,8 @@ SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
 
-   Y_{l,m}(\theta,\phi) = \begin{cases}
-   0 & \text{if $r-j$ is odd},\\
+   \Upsilon_{l,m}(\theta,\phi) = \begin{cases}
+   \sqrt(2) \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m < 0$},\\
    r!\,(-1)^{(r-j)/2} & \text{if $r-j$ is even}.
    \end{cases}
 
