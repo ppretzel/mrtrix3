@@ -25,17 +25,11 @@ SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
 
-    Y^\textit{MRtrix3}_{l,m}(\theta, \phi) = \Biggl \lbrace {
-    \sqrt{2} (-1)^m Im\left[ Y{l,m} (\theta,\phi) \right] \text{ \qquad if } m < 0
-    \atop
-    Y_{l,0} \text{ \qquad if } m = 0
-    \atop
-    \sqrt{2} (-1)^m Re\left[ Y{l,m} (\theta,\phi) \right] \text{ \qquad if } m < 0
-    }
+    (a + b)^2 = a^2 + 2ab + b^2
 
 
-Ordering of SH components
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Indexing
+^^^^^^^^
 
 
 
