@@ -26,8 +26,9 @@ SH basis functions used in *MRtrix3* are therefore:
 .. math::
 
    \Upsilon_{l,m}(\theta,\phi) = \begin{cases}
-   \sqrt(2) \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m < 0$},\\
-   r!\,(-1)^{(r-j)/2} & \text{if $r-j$ is even}.
+   \sqrt{2} \text{Im} \left[ Y_{l,-m}(\theta,\phi) \right] & \text{if $m < 0$},\\
+   Y_{l,0}(\theta,\phi) & \text{if $m = 0$},\\
+   \sqrt{2} \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m > 0$},\\
    \end{cases}
 
 Indexing
