@@ -25,8 +25,11 @@ SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
 
-    (a + b)^2 = a^2 + 2ab + b^2
-
+    Y_{l,m}(\theta,\phi) = \left\{ \begin{array}{rl}
+    -m & \text{if } m < 0,\\
+    Y_{l,0}(\theta,\phi}) & \text{if } m = 0,\\
+    \sqrt(2) \text{Re}\left[ Y_{l,m)(\theta ,\phi) \right] & \text{if } x > 0.
+    \end{array} \right.
 
 Indexing
 ^^^^^^^^
