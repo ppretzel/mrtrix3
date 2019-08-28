@@ -53,6 +53,28 @@ therefore:
 Storage conventions
 ^^^^^^^^^^^^^^^^^^^
 
+Images that contain spherical harmonic coefficients are stored as 4 (or
+higher) dimensional images, with each voxel's coefficients stored along the 4
+axis. The first volume contains the single :math:`l=0` term, the next 5 volumes
+contain the :math:`l=2` terms from :math:`m=-2` to :math:`m=2`, and so on for
+higher even degrees :math:`l` up to :math:`l_\text{max}`. The coefficient 
+:math:`(l,m)` is therefore stored in volume :math:`\frac{1}{2} l(l+1) + m`,
+and the number of coefficients (or volumes) for a given :math:`l_\text{max}` are
+given as :math:`N= \frac{1}{2} (l_\text{max}+1) (l_\text{max}+2)` (tabulated
+below for the first few values of :math:`l_\text{max}`). 
+
+====================  =========
+:math:`l_\text{max}`  :math:`N`
+====================  =========
+         0                1
+         2                6
+         4                15
+         6                28
+         8                45
+        10                66
+        12                91
+====================  =========
+
 
 
 Zonal Harmonics
