@@ -24,8 +24,13 @@ in the series (since these correspond to strictly antisymmetric terms). The
 SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
+   :nowrap:
 
-    Y_{l,m}(\theta,\phi) = \left\{ \begin{array}{rl} -m & \text{if } m < 0,\\ Y_{l,0}(\theta,\phi}) & \text{if } m = 0,\\ \sqrt(2) \text{Re}\left[ Y_{l,m)(\theta ,\phi) \right] & \text{if } x > 0.  \end{array} \right.  
+   Y_{l,m}(\theta,\phi) = \left\{ \begin{array}{rl} 
+   -m & \text{if } m < 0,\\ 
+   Y_{l,0}(\theta,\phi}) & \text{if } m = 0,\\ 
+   \sqrt(2) \text{Re}\left[ Y_{l,m)(\theta ,\phi) \right] & \text{if } x > 0. 
+   \end{array} \right.  
 
 Indexing
 ^^^^^^^^
