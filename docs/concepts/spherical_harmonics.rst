@@ -19,12 +19,11 @@ functions used are a subset of the full complex Spherical Harmonic series.
 First, the data involved are real (the phase information is invariably
 discarded due to its instability to motion), so we can use a real basis with no
 imaginary components. Second, the problems involved all exhibit antipodal
-symmetry (i.e. symmetry about the origin), so we can ignore all odd order terms
+symmetry (i.e. symmetry about the origin, `math: f(\mathbf{x}) = f(-\mathbf{x})`, so we can ignore all odd order terms
 in the series (since these correspond to strictly antisymmetric terms). The
 SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
-   :nowrap:
 
    P_r = \begin{cases}
    0 & \text{if $r-j$ is odd},\\
