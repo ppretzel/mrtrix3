@@ -19,17 +19,24 @@ functions used are a subset of the full complex Spherical Harmonic series.
 First, the data involved are real (the phase information is invariably
 discarded due to its instability to motion), so we can use a real basis with no
 imaginary components. Second, the problems involved all exhibit antipodal
-symmetry (i.e. symmetry about the origin, `math: f(\mathbf{x}) = f(-\mathbf{x})`, so we can ignore all odd order terms
+symmetry (i.e. symmetry about the origin, :math:`f(\mathbf{x}) = f(-\mathbf{x})`, so we can ignore all odd order terms
 in the series (since these correspond to strictly antisymmetric terms). The
 SH basis functions used in *MRtrix3* are therefore:
 
 .. math::
 
    \Upsilon_{l,m}(\theta,\phi) = \begin{cases}
-   \sqrt{2} \text{Im} \left[ Y_{l,-m}(\theta,\phi) \right] & \text{if $m < 0$},\\
+   \sqrt{2} \quad \text{Im} \left[ Y_{l,-m}(\theta,\phi) \right] & \text{if $m < 0$},\\
    Y_{l,0}(\theta,\phi) & \text{if $m = 0$},\\
-   \sqrt{2} \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m > 0$},\\
+   \sqrt{2} \quad \text{Re} \left[ Y_{l,m}(\theta,\phi) \right] & \text{if $m > 0$},\\
    \end{cases}
+
+where :math:`Y_{l,m}(\theta,\phi)` is the full spherical harmonic basis
+function of order :math:`l` and phase :math:`m`, defined as:
+
+.. math::
+
+   Y_{l,m}(\theta,\phi) = P_{l,m}(\cos \theta) e^{im\phi}
 
 Indexing
 ^^^^^^^^
