@@ -26,7 +26,7 @@ SH basis functions used in *MRtrix3* are therefore:
 .. math::
    :nowrap:
 
-   P_{r-j}=\begin{cases}
+   P_r = \begin{cases}
    0 & \text{if $r-j$ is odd},\\
    r!\,(-1)^{(r-j)/2} & \text{if $r-j$ is even}.
    \end{cases}
