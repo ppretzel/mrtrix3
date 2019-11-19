@@ -45,12 +45,16 @@ namespace MR
 
         bool SeedMask::get_seed (Eigen::Vector3f& p) const
         {
-         auto seed = mask;
+          mask.check();
+          auto seed = mask;
+          seed.check();
           do {
             seed.index(0) = std::uniform_int_distribution<int>(0, mask.size(0)-1)(rng);
             seed.index(1) = std::uniform_int_distribution<int>(0, mask.size(1)-1)(rng);
             seed.index(2) = std::uniform_int_distribution<int>(0, mask.size(2)-1)(rng);
           } while (!seed.value());
+          seed.check();
+          mask.check();
           std::uniform_real_distribution<float> uniform;
           p = { seed.index(0)+uniform(rng)-0.5f, seed.index(1)+uniform(rng)-0.5f, seed.index(2)+uniform(rng)-0.5f };
           p = (*mask.voxel2scanner) * p;

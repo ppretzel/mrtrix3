@@ -40,11 +40,23 @@ namespace MR
       class Mask : public Image<bool> { MEMALIGN(Mask)
         public:
           using transform_type = Eigen::Transform<float, 3, Eigen::AffineCompact>;
-          Mask (const Mask&) = default;
+          Mask (const Mask& other) :
+            Image<bool> (other),
+            scanner2voxel (other.scanner2voxel),
+            voxel2scanner (other.voxel2scanner) { check(); }
+
           Mask (const std::string& name) :
               Image<bool> (__get_mask (name)),
               scanner2voxel (new transform_type (Transform(*this).scanner2voxel.cast<float>())),
-              voxel2scanner (new transform_type (Transform(*this).voxel2scanner.cast<float>())) { }
+              voxel2scanner (new transform_type (Transform(*this).voxel2scanner.cast<float>())) { check(); }
+
+          ~Mask () { check(); }
+
+          void check () const {
+            if (ndim() != 3) PAUSE;
+            if (x.size() != 3) PAUSE;
+            if (strides.size() != 3) PAUSE;
+          }
 
           std::shared_ptr<transform_type> scanner2voxel, voxel2scanner; // Ptr to prevent unnecessary copy-construction
 
@@ -65,7 +77,7 @@ namespace MR
           {
             try {
               auto F = parse_floats (spec);
-              if (F.size() != 4) 
+              if (F.size() != 4)
                 throw 1;
               pos[0] = F[0];
               pos[1] = F[1];
@@ -73,7 +85,7 @@ namespace MR
               radius = F[3];
               radius2 = Math::pow2 (radius);
             }
-            catch (...) { 
+            catch (...) {
               DEBUG ("could not parse spherical ROI specification \"" + spec + "\" - assuming mask image");
               mask.reset (new Mask (spec));
             }
@@ -148,7 +160,7 @@ namespace MR
             stream << *i;
             ++i;
             for (; i != R.R.end(); ++i) stream << ", " << *i;
-            return stream; 
+            return stream;
           }
 
         private:
