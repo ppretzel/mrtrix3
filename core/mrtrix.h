@@ -250,6 +250,8 @@ namespace MR
 */
 
 
+  bool match (const std::string& pattern, const std::string& text, bool ignore_case = false);
+
 /**********************************************************************
    specialisations to convert complex numbers to/from text:
 **********************************************************************/
