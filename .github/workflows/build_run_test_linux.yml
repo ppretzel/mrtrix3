@@ -18,6 +18,10 @@ jobs:
       run: ./configure -assert
     - name: build
       run: ./build
-    - name: test
-      run: ./run_tests
+    - name: unit tests
+      run: ./run_tests units
+    - name: test binaries
+      run: ./run_tests binaries
+         
+
 
