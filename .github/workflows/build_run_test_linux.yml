@@ -6,13 +6,16 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
+    env:
+      QT_SELECT: qt5
+
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
       run: sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev
     - name: configure
-      run: QT_SELECT=qt5 ./configure -assert
+      run: ./configure -assert
     - name: build
       run: ./build
     - name: test
