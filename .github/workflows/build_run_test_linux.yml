@@ -12,16 +12,33 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
     - name: install dependencies
       run: sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev
+
     - name: configure
       run: ./configure -assert
+
+    - name: configure log
+      run: cat configure.log
+
     - name: build
       run: ./build
+
+    - name: build log
+      run: cat build.log
+
     - name: unit tests
       run: ./run_tests units
-    - name: test binaries
+
+    - name: unit tests log
+      run: cat testing_units.log
+
+    - name: binary tests
       run: ./run_tests binaries
          
+    - name: binary tests log
+      run: cat testing_units.log
+
 
 
