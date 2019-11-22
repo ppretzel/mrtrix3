@@ -14,31 +14,42 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: install dependencies
-      run: sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev
+      run: sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pytlint pylint3 python3-sphinx sphinx-rtd-theme-common
+
+    - name: check syntax
+      run: ./check_syntax
+
+    - name: pylint (Python 2)
+      run: |
+         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
+         PYTHON=python2 ./run_pylint
+
+    - name: pylint (Python 3)
+      run: |
+         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
+         PYTHON=python3 ./run_pylint
+
+    - name: check building of documentation
+      run: python3 -m sphinx -n -N -W -w sphinx.log docs/ tmp/
 
     - name: configure
-      run: ./configure -assert
+      run: CFLAGS="-Werror" ./configure -assert || cat configure.log
 
-    - name: configure log
-      run: cat configure.log
-
-    - name: build
-      run: ./build
-
-    - name: build log
-      run: cat build.log
+    - name: build || cat build.log
+      run: ./build -nowarnings -persistent -nopaginate
 
     - name: unit tests
-      run: ./run_tests units
-
-    - name: unit tests log
-      run: cat testing_units.log
+      run: ./run_tests units || cat testing_units.log
 
     - name: binary tests
-      run: ./run_tests binaries
-         
-    - name: binary tests log
-      run: cat testing_units.log
+      run: ./run_tests binaries || cat testing_binaries.log
 
+    - name: check command documentation
+      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/ 
 
+    - name: check configure with Python 3
+      run: python3 ./configure || cat configure.log
+
+    - name: check build with Python 3
+      run: ./build -dryrun || cat build.log
 
