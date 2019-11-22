@@ -16,7 +16,7 @@ jobs:
     - name: install dependencies
       run: |
          sudo apt-get update
-         sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pylint pylint3 python3-sphinx sphinx-rtd-theme-common
+         sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pylint pylint3 python3-sphinx sphinx-rtd-theme-common python3-recommonmark 
 
     - name: check syntax
       run: ./check_syntax
