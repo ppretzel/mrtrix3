@@ -116,7 +116,7 @@ jobs:
 
     - name: install dependencies
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pacman -S --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
     - name: check pkg-config
       shell: cmd
