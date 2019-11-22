@@ -3,7 +3,7 @@ name: Build, run & test on Linux
 on: [push]
 
 jobs:
-  build:
+  linux-clang-build:
 
     runs-on: ubuntu-latest
 
@@ -16,23 +16,7 @@ jobs:
     - name: install dependencies
       run: |
          sudo apt-get update
-         sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pylint pylint3 python3-sphinx sphinx-rtd-theme-common python3-recommonmark 
-
-    - name: check syntax
-      run: ./check_syntax
-
-    - name: pylint (Python 2)
-      run: |
-         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
-         PYTHON=python2 ./run_pylint
-
-    - name: pylint (Python 3)
-      run: |
-         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
-         PYTHON=python3 ./run_pylint
-
-    - name: check building of documentation
-      run: python3 -m sphinx -n -N -W -w sphinx.log docs/ tmp/
+         sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pylint pylint3 python3-sphinx sphinx-rtd-theme-common python3-recommonmark python3-sphinx-rtd-theme
 
     - name: configure
       run: CFLAGS="-Werror" ./configure -assert || cat configure.log
@@ -54,4 +38,36 @@ jobs:
 
     - name: check build with Python 3
       run: ./build -dryrun || cat build.log
+
+
+  secondary-checks:
+
+    runs-on: ubuntu-latest
+
+    env:
+      QT_SELECT: qt5
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: install dependencies
+      run: |
+         sudo apt-get update
+         sudo apt-get install libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev pylint pylint3 python3-sphinx sphinx-rtd-theme-common python3-recommonmark 
+
+    - name: check syntax
+      run: ./check_syntax
+
+    - name: pylint (Python 2)
+      run: |
+         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
+         PYTHON=python2 ./run_pylint
+
+    - name: pylint (Python 3)
+      run: |
+         echo "__version__ = 'pylint testing' #pylint: disable=unused-variable" > ./lib/mrtrix3/_version.py
+         PYTHON=python3 ./run_pylint
+
+    - name: check building of documentation
+      run: python3 -m sphinx -n -N -W -w sphinx.log docs/ tmp/
 
