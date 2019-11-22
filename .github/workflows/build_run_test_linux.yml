@@ -102,29 +102,37 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - uses: actions/cache@v1
+      id: cache
+      with:
+        path: C:\tools\msys64
+        key: ${{ runner.os }}-msys2
+
     - name: Install MSYS2
+      if: steps.cache.outputs.cache-hit != 'true'
       run: choco install msys2
 
     - name: install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
       shell: cmd
       run:  C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
-    - name: configure
-      shell: cmd
-      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
-
-
-    - name: build
-      shell: cmd
-      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
-
-    - name: unit tests
-      shell: cmd
-      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
-
-    - name: binary tests
-      shell: cmd
-      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
+      #    - name: configure
+      #      shell: cmd
+      #      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
+      #
+      #
+      #    - name: build
+      #      shell: cmd
+      #      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
+      #
+      #    - name: unit tests
+      #      shell: cmd
+      #      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
+      #
+      #    - name: binary tests
+      #      shell: cmd
+      #      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
 
