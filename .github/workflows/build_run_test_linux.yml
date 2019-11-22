@@ -101,23 +101,23 @@ jobs:
     - uses: numworks/setup-msys2@v1
 
     - name: install dependencies
-      shell: msys2do "{0}"
+      shell: msys2do {0}
       run: pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
 
     - name: configure
-      shell: msys2do "{0}"
+      shell: msys2do {0}
       run: CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
 
     - name: build
-      shell: msys2do "{0}"
+      shell: msys2do {0}
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
     - name: unit tests
-      shell: msys2do "{0}"
+      shell: msys2do {0}
       run: ./run_tests units || { cat testing_units.log; false; }
 
     - name: binary tests
-      shell: msys2do "{0}"
+      shell: msys2do {0}
       run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
 
