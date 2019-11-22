@@ -96,16 +96,14 @@ jobs:
 
     runs-on: windows-latest
 
-    env: 
-      CFLAGS: -Werror
-      PATH: /mingw64/bin:/usr/local/bin:/usr/bin:/bin
-
     steps:
     - uses: actions/checkout@v1
 
     - uses: numworks/setup-msys2@v1
 
     - name: check PATH
+      env:
+        PATH: /mingw64/bin:/usr/local/bin:/usr/bin:/bin
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "echo $PATH"
 
     - name: install dependencies
@@ -115,6 +113,8 @@ jobs:
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pkg-config --debug --cflags eigen3"
 
     - name: configure
+      env:
+        CFLAGS: -Werror
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
