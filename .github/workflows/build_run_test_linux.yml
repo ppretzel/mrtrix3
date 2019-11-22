@@ -101,7 +101,8 @@ jobs:
     - uses: numworks/setup-msys2@v1
 
     - name: install dependencies
-      run: msys2do pacman -S --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
+      run: |
+        msys2do pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
 
     - name: configure
       run: msys2do CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
