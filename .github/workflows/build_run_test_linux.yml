@@ -110,24 +110,31 @@ jobs:
     - uses: numworks/setup-msys2@v1
 
     - name: check PATH
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "echo $PATH"
 
     - name: install dependencies
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
     - name: check pkg-config
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pkg-config --debug --cflags eigen3"
 
     - name: configure
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
 
     - name: unit tests
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests units || { cat testing_units.log; false; }"
 
     - name: binary tests
+      shell: cmd
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
