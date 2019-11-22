@@ -110,6 +110,9 @@ jobs:
     - name: install dependencies
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
+    - name: check pkg-config
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pkg-config --debug --cflags eigen3"
+
     - name: configure
       run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
 
