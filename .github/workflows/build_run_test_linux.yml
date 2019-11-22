@@ -96,35 +96,39 @@ jobs:
 
     runs-on: windows-latest
 
+    env:
+      CFLAGS: -Werror
+      MSYS2_PATH_TYPE: inherit 
+      MSYSTEM: MINGW64
+      MSYSCON: defterm
+      CHERE_INVOKING: enabled_from_arguments
+      MSYS2_NOSTART: yes
+
     steps:
     - uses: actions/checkout@v1
 
     - uses: numworks/setup-msys2@v1
 
     - name: check PATH
-      env:
-        PATH: /mingw64/bin:/usr/local/bin:/usr/bin:/bin
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "echo $PATH"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "echo $PATH"
 
     - name: install dependencies
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
     - name: check pkg-config
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pkg-config --debug --cflags eigen3"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pkg-config --debug --cflags eigen3"
 
     - name: configure
-      env:
-        CFLAGS: -Werror
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
 
     - name: unit tests
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests units || { cat testing_units.log; false; }"
 
     - name: binary tests
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
+      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
 
