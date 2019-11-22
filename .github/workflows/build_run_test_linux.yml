@@ -107,17 +107,18 @@ jobs:
       run: msys2do pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
 
     - name: configure
-      run: msys2do ./configure -nooptim
+      shell: cmd
+      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
+
 
     - name: build
-      run: msys2do ./build -nowarnings -persistent -nopaginate
+      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
 
     - name: unit tests
-      run: msys2do ./run_tests units
+      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
 
     - name: binary tests
-      run: msys2 ./run_tests binaries
-
+      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
 
