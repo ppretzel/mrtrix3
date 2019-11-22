@@ -101,24 +101,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: numworks/setup-msys2@v1
+
+    - name: Install MSYS2
+      run: choco install msys2
 
     - name: install dependencies
-      run: msys2do pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
+      shell: cmd
+      run:  C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
     - name: configure
       shell: cmd
-      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
+      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./configure -assert || { cat configure.log; false; }"
 
 
     - name: build
-      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
+      shell: cmd
+      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
 
     - name: unit tests
-      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
+      shell: cmd
+      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests units || { cat testing_units.log; false; }"
 
     - name: binary tests
-      run: %RUNNER_TEMP%\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
+      shell: cmd
+      run: C:\tools\msys64\msys2_shell.cmd -mingw64 -here -defterm -no-start -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
 
