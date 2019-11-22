@@ -105,16 +105,20 @@ jobs:
         msys2do pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
 
     - name: configure
-      run: msys2do CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
+    - shell: msys2do "{0}"
+      run: CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
 
     - name: build
-      run: msys2do ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
+    - shell: msys2do "{0}"
+      run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
     - name: unit tests
-      run: msys2do ./run_tests units || { cat testing_units.log; false; }
+    - shell: msys2do "{0}"
+      run: ./run_tests units || { cat testing_units.log; false; }
 
     - name: binary tests
-      run: msys2do ./run_tests binaries || { cat testing_binaries.log; false; }
+    - shell: msys2do "{0}"
+      run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
 
 
