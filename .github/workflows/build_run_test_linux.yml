@@ -96,6 +96,9 @@ jobs:
 
     runs-on: windows-latest
 
+    env: 
+      CFLAGS: -Werror
+
     steps:
     - uses: actions/checkout@v1
     - uses: numworks/setup-msys2@v1
@@ -104,7 +107,7 @@ jobs:
       run: msys2do pacman -Syu --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
 
     - name: configure
-      run: msys2do CFLAGS="-Werror" ./configure -nooptim
+      run: msys2do ./configure -nooptim
 
     - name: build
       run: msys2do ./build -nowarnings -persistent -nopaginate
