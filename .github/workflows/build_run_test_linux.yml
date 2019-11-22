@@ -98,7 +98,6 @@ jobs:
 
     env:
       CFLAGS: -Werror
-      MSYS2_PATH_TYPE: inherit 
       MSYSTEM: MINGW64
       MSYSCON: defterm
       CHERE_INVOKING: enabled_from_arguments
