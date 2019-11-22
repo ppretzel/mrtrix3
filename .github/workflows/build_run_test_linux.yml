@@ -78,14 +78,42 @@ jobs:
     - name: install dependencies
       run: |
          brew update
-         brew install qt5 eigen pkg-config
+         brew install qt5 eigen pkg-config libtiff fftw libpng
          brew link --force qt5
 
     - name: configure
       run: CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
 
-    - name: build 
+    - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
+
+
+
+
+
+
+  windows-build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: numworks/setup-msys2@v1
+
+    - name: install dependencies
+    - run: msys2do pacman -S --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff
+
+    - name: configure
+      run: msys2do CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
+
+    - name: build
+      run: msys2do ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
+
+    - name: unit tests
+      run: msys2do ./run_tests units || { cat testing_units.log; false; }
+
+    - name: binary tests
+      run: msys2do ./run_tests binaries || { cat testing_binaries.log; false; }
 
 
 
