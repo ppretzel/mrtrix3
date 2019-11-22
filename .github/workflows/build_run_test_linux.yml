@@ -1,4 +1,4 @@
-name: Build, run & test on Linux
+name: Build, run & test
 
 on: [push]
 
@@ -19,25 +19,25 @@ jobs:
          sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -assert || cat configure.log
+      run: CFLAGS="-Werror" ./configure -assert || { cat configure.log; false; }
 
-    - name: build || cat build.log
-      run: ./build -nowarnings -persistent -nopaginate
+    - name: build
+      run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
     - name: unit tests
-      run: ./run_tests units || cat testing_units.log
+      run: ./run_tests units || { cat testing_units.log; false; }
 
     - name: binary tests
-      run: ./run_tests binaries || cat testing_binaries.log
+      run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
     - name: check command documentation
-      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/ 
+      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/
 
     - name: check configure with Python 3
-      run: python3 ./configure || cat configure.log
+      run: python3 ./configure || { cat configure.log; false; }
 
     - name: check build with Python 3
-      run: ./build -dryrun || cat build.log
+      run: ./build -dryrun || { cat build.log; false; }
 
 
 
@@ -60,10 +60,10 @@ jobs:
          sudo apt-get install g++-9 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -nooptim || cat configure.log
+      run: CFLAGS="-Werror" CXX=g++-9 ./configure -nooptim || { cat configure.log; false; }
 
-    - name: build || cat build.log
-      run: ./build -nowarnings -persistent -nopaginate
+    - name: build
+      run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
 
 
@@ -79,12 +79,13 @@ jobs:
       run: |
          brew update
          brew install qt5 eigen pkg-config
+         brew link --force qt5
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -nooptim || cat configure.log
+      run: CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
 
-    - name: build || cat build.log
-      run: ./build -nowarnings -persistent -nopaginate
+    - name: build 
+      run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
 
 
