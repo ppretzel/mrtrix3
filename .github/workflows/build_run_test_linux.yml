@@ -105,13 +105,13 @@ jobs:
 
     steps:
 
+    - uses: actions/checkout@v1
+
     - name: fetch and install MSYS2
       run: bash -c 'curl -sL https://github.com/MRtrix3/MinGW/releases/download/1.0/msys2.tar.a{a..i} | tar xf -'
 
     - name: check storage on device
       run: bash -c 'df -h'
-
-    - uses: actions/checkout@v1
 
     - name: check current working directory
       run: |
@@ -120,9 +120,7 @@ jobs:
 
     - name: configure
       shell: cmd
-      run: |
-              cd
-              msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
+      run: msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
       shell: cmd
