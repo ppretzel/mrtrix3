@@ -109,7 +109,9 @@ jobs:
       run: |
           bash -c 'pwd'
           git clone https://github.com/MRtrix3/msys2.git
-          bash -c 'ls *'
+          bash -c 'ls -l'
+          bash -c 'ls -l *'
+          bash -c 'pwd'
           bash -c 'cat msys2/*.tgz.* | tar xzf -'
 
     - uses: actions/checkout@v1
