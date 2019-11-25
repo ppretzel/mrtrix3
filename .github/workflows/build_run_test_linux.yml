@@ -113,13 +113,16 @@ jobs:
 
     - uses: actions/checkout@v1
 
-    - name: install dependencies
-      shell: cmd
-      run: msys64\msys2_shell.cmd -c "pacman -Syy --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
+    - name: check current working directory
+      run: |
+              bash -c 'pwd'
+              bash -c 'ls -l'
 
     - name: configure
       shell: cmd
-      run: msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
+      run: |
+              cd
+              msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
       shell: cmd
