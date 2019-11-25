@@ -106,7 +106,7 @@ jobs:
     steps:
 
     - name: fetch and install MSYS2
-      run: bash -c 'wget https://github.com/MRtrix3/msys2/raw/master/msys2.tgz.a{a,b,c} -O - | tar xvfz -'
+      run: bash -c 'curl -sL https://github.com/MRtrix3/msys2/raw/master/msys2.tgz.a{a,b,c} | tar xfz -'
 
     - name: check storage on device
       run: bash -c 'df -h'
