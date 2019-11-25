@@ -106,7 +106,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: fetch and install MSYS2
+    - name: fetch and install MSYS2
       shell: cmd
       run: wget https://osf.io/yc9qw/download -outFile msys2.tgz
 
