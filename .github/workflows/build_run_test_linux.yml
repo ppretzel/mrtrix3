@@ -104,11 +104,13 @@ jobs:
       MSYS2_NOSTART: yes
 
     steps:
-    - uses: actions/checkout@v1
-
     - name: fetch and install MSYS2
       run: |
           bash -c 'echo $PATH'
+          bash -c 'git lfs --help'
+          bash -c 'tar xcf bogus'
+
+    - uses: actions/checkout@v1
 
 
 
