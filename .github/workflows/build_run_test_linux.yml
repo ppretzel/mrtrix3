@@ -111,6 +111,8 @@ jobs:
 
     - name: fetch and install MSYS2
       run: |
+          bash -c 'ls'
+          bash -c 'ls *'
           bash -c 'cat msys2/*.tgz.* | tar xzf -'
 
     - uses: actions/checkout@v1
