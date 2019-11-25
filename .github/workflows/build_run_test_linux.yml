@@ -111,9 +111,7 @@ jobs:
 
     - name: fetch and install MSYS2
       run: |
-          bash -c 'echo $PATH'
-          bash -c 'git checkout bash
-          bash -c 'tar xcf bogus'
+          bash -c 'cat msys2/*.tgz.* | tar xzf -'
 
     - uses: actions/checkout@v1
 
@@ -121,23 +119,23 @@ jobs:
 
     - name: install dependencies
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "pacman -Syy --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
+      run: msys64\msys2_shell.cmd -c "pacman -Syy --noconfirm git python pkg-config mingw-w64-x86_64-gcc mingw-w64-x86_64-eigen3 mingw-w64-x86_64-qt5 mingw-w64-x86_64-fftw mingw-w64-x86_64-libtiff"
 
     - name: configure
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
+      run: msys64\msys2_shell.cmd -c "./configure -assert || { cat configure.log; false; }"
 
     - name: build
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
+      run: msys64\msys2_shell.cmd -c "./build -nowarnings -persistent -nopaginate || { cat build.log; false; }"
 
     - name: unit tests
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests units || { cat testing_units.log; false; }"
+      run: msys64\msys2_shell.cmd -c "./run_tests units || { cat testing_units.log; false; }"
 
     - name: binary tests
       shell: cmd
-      run: d:\a\_temp\msys\msys64\msys2_shell.cmd -c "./run_tests binaries || { cat testing_binaries.log; false; }"
+      run: msys64\msys2_shell.cmd -c "./run_tests binaries || { cat testing_binaries.log; false; }"
 
 
 
