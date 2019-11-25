@@ -107,7 +107,8 @@ jobs:
 
     - name: fetch and install MSYS2
       run: |
-          bash -c 'git checkout https://github.com/MRtrix3/msys2.git'
+          bash -c 'pwd'
+          bash -c 'git clone https://github.com/MRtrix3/msys2.git'
           bash -c 'ls *'
           bash -c 'cat msys2/*.tgz.* | tar xzf -'
 
