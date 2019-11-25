@@ -107,8 +107,9 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: fetch and install MSYS2
-      shell: cmd
-      run: wget https://osf.io/yc9qw/download -outFile msys2.tgz
+      run: |
+          bash -c 'echo $PATH'
+
 
 
     - name: install dependencies
