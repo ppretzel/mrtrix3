@@ -105,14 +105,11 @@ jobs:
 
     steps:
 
-    - name: fetch MSYS2
-      run: git lfs clone https://github.com/MRtrix3/msys2.git
+    - name: fetch and install MSYS2
+      run: bash -c 'wget https://github.com/MRtrix3/msys2/raw/master/msys2.tgz.a{a,b,c} -O - | tar xvfz -'
 
     - name: check storage on device
       run: bash -c 'df -h'
-
-    - name: extract MSYS2
-      run: bash -c 'cat msys2/*.tgz.* | tar xzf -'
 
     - uses: actions/checkout@v1
 
