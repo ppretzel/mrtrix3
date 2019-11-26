@@ -3,7 +3,7 @@ name: Build, run & test
 on: [push]
 
 jobs:
-  linux-clang-build-test:
+  linux-clang-build:
 
     runs-on: ubuntu-latest
 
@@ -30,6 +30,15 @@ jobs:
     - name: binary tests
       run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
+    - name: check command documentation
+      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/
+
+    - name: check configure with Python 3
+      run: python3 ./configure || { cat configure.log; false; }
+
+    - name: check build with Python 3
+      run: ./build -dryrun || { cat build.log; false; }
+
 
 
 
@@ -51,7 +60,7 @@ jobs:
          sudo apt-get install g++-9 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" CXX=g++-9 ./configure -nooptim || { cat configure.log; false; }
+      run: CFLAGS="-Werror" CXX=g++-9 ./configure -assert || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
@@ -61,15 +70,6 @@ jobs:
 
     - name: binary tests
       run: ./run_tests binaries || { cat testing_binaries.log; false; }
-
-    - name: check command documentation
-      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/
-
-    - name: check configure with Python 3
-      run: python3 ./configure || { cat configure.log; false; }
-
-    - name: check build with Python 3
-      run: ./build -dryrun || { cat build.log; false; }
 
 
 
@@ -87,7 +87,7 @@ jobs:
          brew link --force qt5
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -nooptim || { cat configure.log; false; }
+      run: CFLAGS="-Werror" ./configure -assert || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
