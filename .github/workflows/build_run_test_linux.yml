@@ -65,11 +65,8 @@ jobs:
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
-    - name: unit tests
-      run: ./run_tests units || { cat testing_units.log; false; }
 
-    - name: binary tests
-      run: ./run_tests binaries || { cat testing_binaries.log; false; }
+
 
 
 
