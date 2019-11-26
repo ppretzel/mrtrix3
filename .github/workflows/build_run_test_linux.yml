@@ -60,7 +60,7 @@ jobs:
          sudo apt-get install g++-9 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" CXX=g++-9 ./configure -assert || { cat configure.log; false; }
+      run: CFLAGS="-Werror" CXX=g++-9 ./configure -nooptim || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
