@@ -30,15 +30,6 @@ jobs:
     - name: binary tests
       run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
-    - name: check command documentation
-      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/
-
-    - name: check configure with Python 3
-      run: python3 ./configure || { cat configure.log; false; }
-
-    - name: check build with Python 3
-      run: ./build -dryrun || { cat build.log; false; }
-
 
 
 
@@ -65,6 +56,20 @@ jobs:
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
 
+    - name: unit tests
+      run: ./run_tests units || { cat testing_units.log; false; }
+
+    - name: binary tests
+      run: ./run_tests binaries || { cat testing_binaries.log; false; }
+
+    - name: check command documentation
+      run: ./docs/generate_user_docs.sh && git diff --exit-code docs/
+
+    - name: check configure with Python 3
+      run: python3 ./configure || { cat configure.log; false; }
+
+    - name: check build with Python 3
+      run: ./build -dryrun || { cat build.log; false; }
 
 
 
@@ -86,6 +91,12 @@ jobs:
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
+
+    - name: unit tests
+      run: ./run_tests units || { cat testing_units.log; false; }
+
+    - name: binary tests
+      run: ./run_tests binaries || { cat testing_binaries.log; false; }
 
 
 
