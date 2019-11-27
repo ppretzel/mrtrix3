@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      CFLAGS: -Werror
       QT_SELECT: qt5
 
     steps:
@@ -19,7 +20,7 @@ jobs:
          sudo apt-get install clang-8 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -assert || { cat configure.log; false; }
+      run: ./configure -assert || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
@@ -49,6 +50,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      CXX: g++-9
+      CFLAGS: -Werror
       QT_SELECT: qt5
 
     steps:
@@ -60,7 +63,7 @@ jobs:
          sudo apt-get install g++-9 libqt5opengl5-dev libqt5svg5-dev libglvnd-dev libeigen3-dev zlib1g-dev libfftw3-dev 
 
     - name: configure
-      run: CFLAGS="-Werror" CXX=g++-9 ./configure -nooptim || { cat configure.log; false; }
+      run: ./configure -nooptim || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
@@ -74,6 +77,9 @@ jobs:
 
     runs-on: macos-latest
 
+    env:
+      CFLAGS: -Werror
+
     steps:
     - uses: actions/checkout@v1
 
@@ -84,7 +90,7 @@ jobs:
          brew link --force qt5
 
     - name: configure
-      run: CFLAGS="-Werror" ./configure -assert || { cat configure.log; false; }
+      run: ./configure -assert || { cat configure.log; false; }
 
     - name: build
       run: ./build -nowarnings -persistent -nopaginate || { cat build.log; false; }
