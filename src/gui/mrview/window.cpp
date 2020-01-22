@@ -2031,6 +2031,20 @@ namespace MR
             return;
           }
 
+          if (opt.opt->is ("background_colour")) {
+            vector<int> rgb = parse_ints(opt[0]); 
+            try {
+              QColor colour (rgb[0], rgb[1], rgb[2], 255); 
+              if (colour.isValid()) { 
+                background_colour[0] = GLubyte(colour.red()) / 255.0f;
+                background_colour[1] = GLubyte(colour.green()) / 255.0f;
+                background_colour[2] = GLubyte(colour.blue()) / 255.0f;
+              }
+            }
+            catch (Exception E) {
+              throw Exception ("background_colour option: invalid colour");
+            }
+          }
 
           if (opt.opt->is ("fps")) {
             show_FPS = true;
@@ -2122,6 +2136,9 @@ namespace MR
 
           + Option ("intensity_range", "Set the image intensity range to that specified.").allow_multiple()
           +   Argument ("min,max").type_sequence_float()
+
+          + Option ("background_colour", "Set background color").allow_multiple()
+          +   Argument ("R,G,B").type_sequence_int()
 
           + OptionGroup ("Window management options")
 

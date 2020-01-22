@@ -69,6 +69,9 @@ void usage ()
     .type_image_in ();
 
   GUI::MRView::Window::add_commandline_options (OPTIONS);
+  //  + Option ("background_color",
+  //            "The background color, as RGB values ranging from 0 to 1.0, e.g. .5 .5 .5 for grey or 1 0 0 for red")
+  //      + Argument ("value").type_sequence_float()
 
 #define TOOL(classname, name, description) \
   MR::GUI::MRView::Tool::classname::add_commandline_options (OPTIONS);
