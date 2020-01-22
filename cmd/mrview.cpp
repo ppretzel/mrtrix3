@@ -68,6 +68,8 @@ void usage ()
     .allow_multiple()
     .type_image_in ();
 
+  GUI::MRView::Window::add_commandline_options (OPTIONS);
+
 #define TOOL(classname, name, description) \
   MR::GUI::MRView::Tool::classname::add_commandline_options (OPTIONS);
   {
