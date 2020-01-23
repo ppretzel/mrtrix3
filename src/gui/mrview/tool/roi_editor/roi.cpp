@@ -1,17 +1,18 @@
-/*
- * Copyright (c) 2008-2018 the MRtrix3 contributors.
+/* Copyright (c) 2008-2019 the MRtrix3 contributors.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, you can obtain one at http://mozilla.org/MPL/2.0/
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * MRtrix3 is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * Covered Software is provided under this License on an "as is"
+ * basis, without warranty of any kind, either expressed, implied, or
+ * statutory, including, without limitation, warranties that the
+ * Covered Software is free of defects, merchantable, fit for a
+ * particular purpose or non-infringing.
+ * See the Mozilla Public License v. 2.0 for more details.
  *
- * For more details, see http://www.mrtrix.org/
+ * For more details, see http://www.mrtrix.org/.
  */
-
 
 #include <string>
 
@@ -83,6 +84,8 @@ namespace MR
 
           list_view = new QListView (this);
           list_view->setSelectionMode (QAbstractItemView::SingleSelection);
+          list_view->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+          list_view->setTextElideMode (Qt::ElideLeft);
           list_view->setDragEnabled (true);
           list_view->setDragDropMode (QAbstractItemView::InternalMove);
           list_view->setAcceptDrops (true);
@@ -292,7 +295,7 @@ namespace MR
 
         void ROI::open_slot ()
         {
-          vector<std::string> names = Dialog::File::get_images (this, "Select ROI images to open");
+          vector<std::string> names = Dialog::File::get_images (this, "Select ROI images to open", &current_folder);
           if (names.empty())
             return;
           vector<std::unique_ptr<MR::Header>> list;
@@ -338,19 +341,19 @@ namespace MR
         {
           vector<GLubyte> data (roi->header().size(0) * roi->header().size(1) * roi->header().size(2));
           {
-            MRView::GrabContext context;
-            ASSERT_GL_MRVIEW_CONTEXT_IS_CURRENT;
+            GL::Context::Grab context;
+            GL::assert_context_is_current();
             roi->texture().bind();
             gl::PixelStorei (gl::PACK_ALIGNMENT, 1);
             gl::GetTexImage (gl::TEXTURE_3D, 0, gl::RED, gl::UNSIGNED_BYTE, (void*) (&data[0]));
-            ASSERT_GL_MRVIEW_CONTEXT_IS_CURRENT;
+            GL::assert_context_is_current();
           }
 
           try {
             MR::Header header (roi->header());
             header.ndim() = 3;
             header.datatype() = DataType::Bit;
-            std::string name = GUI::Dialog::File::get_save_image_name (&window(), "Select name of ROI to save", roi->get_filename());
+            std::string name = GUI::Dialog::File::get_save_image_name (&window(), "Select name of ROI to save", roi->get_filename(), &current_folder);
             if (name.size()) {
               auto out = MR::Image<bool>::create (name, header);
               roi->save (out, data.data());
@@ -549,7 +552,7 @@ namespace MR
 
         void ROI::draw (const Projection& projection, bool is_3D, int, int)
         {
-          ASSERT_GL_MRVIEW_CONTEXT_IS_CURRENT;
+          GL::assert_context_is_current();
           if (is_3D) return;
 
           if (!is_3D) {
@@ -578,7 +581,7 @@ namespace MR
             gl::Enable (gl::DEPTH_TEST);
             gl::DepthMask (gl::TRUE_);
           }
-          ASSERT_GL_MRVIEW_CONTEXT_IS_CURRENT;
+          GL::assert_context_is_current();
         }
 
 

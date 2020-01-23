@@ -1,17 +1,18 @@
-/*
- * Copyright (c) 2008-2018 the MRtrix3 contributors.
+/* Copyright (c) 2008-2019 the MRtrix3 contributors.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, you can obtain one at http://mozilla.org/MPL/2.0/
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * MRtrix3 is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * Covered Software is provided under this License on an "as is"
+ * basis, without warranty of any kind, either expressed, implied, or
+ * statutory, including, without limitation, warranties that the
+ * Covered Software is free of defects, merchantable, fit for a
+ * particular purpose or non-infringing.
+ * See the Mozilla Public License v. 2.0 for more details.
  *
- * For more details, see http://www.mrtrix.org/
+ * For more details, see http://www.mrtrix.org/.
  */
-
 
 #ifndef __gui_mrview_tool_base_h__
 #define __gui_mrview_tool_base_h__
@@ -65,6 +66,8 @@ namespace MR
           public:
             Base (Dock* parent);
             Window& window () const { return *Window::main; }
+
+            std::string current_folder;
 
             static void add_commandline_options (MR::App::OptionList& options);
             virtual bool process_commandline_option (const MR::App::ParsedOption& opt);
@@ -179,21 +182,21 @@ namespace MR
 
             virtual ~__Action__ () { delete dock; }
 
-            virtual Dock* create () = 0;
+            virtual Dock* create (bool floating) = 0;
             Dock* dock;
         };
         //! \endcond
 
 
         template <class T>
-          Dock* create (const QString& text)
+          Dock* create (const QString& text, bool floating)
           {
             Dock* dock = new Dock (text);
             Window::main->addDockWidget (Qt::RightDockWidgetArea, dock);
             dock->tool = new T (dock);
             dock->tool->adjustSize();
             dock->setWidget (dock->tool);
-            dock->setFloating (true);
+            dock->setFloating (floating);
             dock->show();
             return dock;
           }
@@ -209,8 +212,8 @@ namespace MR
                 int index) :
               __Action__ (parent, name, description, index) { }
 
-            virtual Dock* create () {
-              dock = Tool::create<T> (this->text());
+            virtual Dock* create (bool floating) {
+              dock = Tool::create<T> (this->text(), floating);
               return dock;
             }
         };
